@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Juego 1</title>
+
+<style>
+body{
+    margin:0;
+    background:#ff8c00;
+    font-family:Arial;
+    text-align:center;
+}
+
+h1{
+    color:white;
+}
+
+canvas{
+    background:white;
+    border:6px solid #333;
+    border-radius:15px;
+    margin-top:20px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>🍓 Juego 1</h1>
+
+<canvas id="game" width="400" height="600"></canvas>
+
+<script>
+
+const canvas=document.getElementById("game");
+const ctx=canvas.getContext("2d");
+
+let fruta={
+x:200,
+y:40,
+r:22,
+cayendo:false
+};
+
+canvas.addEventListener("mousemove",(e)=>{
+
+const rect=canvas.getBoundingClientRect();
+
+if(!fruta.cayendo){
+fruta.x=e.clientX-rect.left;
+}
+
+});
+
+canvas.addEventListener("click",()=>{
+
+fruta.cayendo=true;
+
+});
+
+function dibujar(){
+
+ctx.clearRect(0,0,400,600);
+
+ctx.font="40px Arial";
+ctx.fillText("🍓",fruta.x-20,fruta.y);
+
+if(fruta.cayendo){
+
+fruta.y+=4;
+
+if(fruta.y>560){
+
+fruta.y=40;
+fruta.cayendo=false;
+
+}
+
+}
+
+requestAnimationFrame(dibujar);
+
+}
+
+dibujar();
+
+</script>
+
+</body>
+</html>
