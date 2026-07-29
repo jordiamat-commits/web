@@ -166,3 +166,39 @@ border:2px solid black;
 <div class="ficha balon" style="left:530px;top:330px;">⚽</div>
 
 </div>
+  <script>
+const fichas = document.querySelectorAll(".ficha");
+
+fichas.forEach(ficha => {
+
+let mover = false;
+let offsetX = 0;
+let offsetY = 0;
+
+ficha.addEventListener("mousedown", function(e){
+    mover = true;
+    offsetX = e.offsetX;
+    offsetY = e.offsetY;
+    ficha.style.cursor = "grabbing";
+});
+
+document.addEventListener("mousemove", function(e){
+    if(!mover) return;
+
+    const campo = document.getElementById("campo");
+    const rect = campo.getBoundingClientRect();
+
+    ficha.style.left = (e.clientX - rect.left - offsetX) + "px";
+    ficha.style.top = (e.clientY - rect.top - offsetY) + "px";
+});
+
+document.addEventListener("mouseup", function(){
+    mover = false;
+    ficha.style.cursor = "grab";
+});
+
+});
+</script>
+
+</body>
+</html>
