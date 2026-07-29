@@ -2,79 +2,117 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Juego 2</title>
+<title>Atrapa Monedas</title>
 
 <style>
 body{
-    background:#87CEEB;
+    margin:0;
+    background:skyblue;
     text-align:center;
     font-family:Arial;
 }
 
+h1{
+    color:white;
+}
+
 canvas{
-    background:white;
-    border:4px solid black;
+    background:#87CEEB;
+    border:4px solid white;
 }
 </style>
 </head>
 
 <body>
 
-<h1>🪙 Juego 2 - Atrapa la moneda</h1>
+<h1>🪙 Atrapa Monedas</h1>
 
-<canvas id="juego" width="400" height="500"></canvas>
+<h2 id="puntos">Puntos: 0</h2>
+
+<canvas id="juego" width="600" height="500"></canvas>
 
 <script>
 
 const canvas=document.getElementById("juego");
 const ctx=canvas.getContext("2d");
 
-let cesta=170;
-let monedaX=Math.random()*360;
-let monedaY=0;
 let puntos=0;
+let velocidad=3;
+
+let cesta={
+    x:250,
+    y:450,
+    ancho:100,
+    alto:20
+};
+
+let monedas=[
+    {x:100,y:-50},
+    {x:350,y:-250}
+];
 
 document.addEventListener("keydown",function(e){
 
-if(e.key=="ArrowLeft") cesta-=20;
-if(e.key=="ArrowRight") cesta+=20;
+    if(e.key=="ArrowLeft"){
+        cesta.x-=30;
+    }
 
-if(cesta<0)cesta=0;
-if(cesta>320)cesta=320;
+    if(e.key=="ArrowRight"){
+        cesta.x+=30;
+    }
 
 });
 
 function dibujar(){
 
-ctx.clearRect(0,0,400,500);
+    ctx.clearRect(0,0,600,500);
 
-ctx.font="25px Arial";
-ctx.fillText("Puntos: "+puntos,10,30);
+    ctx.fillStyle="brown";
+    ctx.fillRect(cesta.x,cesta.y,cesta.ancho,cesta.alto);
 
-ctx.fillStyle="brown";
-ctx.fillRect(cesta,460,80,20);
+    for(let i=0;i<monedas.length;i++){
 
-ctx.font="30px Arial";
-ctx.fillText("🪙",monedaX,monedaY);
+        monedas[i].y+=velocidad;
 
-monedaY+=3;
+        ctx.beginPath();
+        ctx.arc(monedas[i].x,monedas[i].y,15,0,Math.PI*2);
+        ctx.fillStyle="gold";
+        ctx.fill();
 
-if(monedaY>450 && monedaX>cesta && monedaX<cesta+80){
+        // Atrapar moneda
+        if(
+            monedas[i].y>430 &&
+            monedas[i].x>cesta.x &&
+            monedas[i].x<cesta.x+cesta.ancho
+        ){
 
-puntos++;
-monedaY=0;
-monedaX=Math.random()*360;
+            puntos++;
+            document.getElementById("puntos").innerHTML="Puntos: "+puntos;
 
-}
+            monedas[i].x=Math.random()*560+20;
+            monedas[i].y=-Math.random()*300;
 
-if(monedaY>500){
+            if(puntos==10){
+                monedas.push({
+                    x:Math.random()*560+20,
+                    y:-150
+                });
+            }
 
-monedaY=0;
-monedaX=Math.random()*360;
+            if(puntos==20){
+                velocidad=5;
+            }
+        }
 
-}
+        // Game Over
+        if(monedas[i].y>500){
+            alert("GAME OVER\n\nPuntos: "+puntos);
+            location.reload();
+        }
 
-requestAnimationFrame(dibujar);
+    }
+
+    requestAnimationFrame(dibujar);
 
 }
 
