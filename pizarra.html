@@ -7,70 +7,162 @@
 <style>
 
 body{
-    margin:0;
-    background:#1b5e20;
-    color:white;
-    text-align:center;
-    font-family:Arial;
+margin:0;
+background:#1b1b1b;
+font-family:Arial;
+overflow:hidden;
 }
 
-canvas{
-    background:#43a047;
-    border:5px solid white;
+h1{
+color:white;
+text-align:center;
+margin:10px;
 }
 
-button{
-    font-size:22px;
-    padding:15px 30px;
-    margin:15px;
-    border:none;
-    border-radius:12px;
-    cursor:pointer;
+#campo{
+position:relative;
+width:1100px;
+height:700px;
+margin:auto;
+background:
+repeating-linear-gradient(
+90deg,
+#3fae3f 0px,
+#3fae3f 70px,
+#47be47 70px,
+#47be47 140px);
+border:6px solid white;
+}
+
+.linea{
+position:absolute;
+background:white;
+}
+
+#centro{
+position:absolute;
+left:50%;
+top:0;
+width:3px;
+height:100%;
+background:white;
+transform:translateX(-50%);
+}
+
+#circulo{
+position:absolute;
+left:50%;
+top:50%;
+width:160px;
+height:160px;
+border:3px solid white;
+border-radius:50%;
+transform:translate(-50%,-50%);
+}
+
+#punto{
+position:absolute;
+left:50%;
+top:50%;
+width:10px;
+height:10px;
+background:white;
+border-radius:50%;
+transform:translate(-50%,-50%);
+}
+
+.area{
+position:absolute;
+width:170px;
+height:300px;
+border:3px solid white;
+top:200px;
+}
+
+#izq{
+left:0;
+border-left:none;
+}
+
+#der{
+right:0;
+border-right:none;
+}
+
+.ficha{
+position:absolute;
+width:42px;
+height:42px;
+border-radius:50%;
+cursor:grab;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:bold;
+color:white;
+user-select:none;
+}
+
+.roja{
+background:#d50000;
+}
+
+.azul{
+background:#004cff;
+}
+
+.balon{
+background:white;
+color:black;
+border:2px solid black;
 }
 
 </style>
-
 </head>
 
 <body>
 
-<h1>🧲 Pizarra Magnética</h1>
+<h1>Pizarra Magnética</h1>
 
-<p>Próximamente podrás mover jugadores, balón, conos y árbitro.</p>
+<div id="campo">
 
-<canvas id="campo" width="900" height="500"></canvas>
+<div id="centro"></div>
+<div id="circulo"></div>
+<div id="punto"></div>
 
-<br>
+<div class="area" id="izq"></div>
+<div class="area" id="der"></div>
 
-<button onclick="location.href='futbol.html'">
-⬅ Volver
-</button>
+<div class="ficha roja" style="left:150px;top:100px;">1</div>
+<div class="ficha roja" style="left:250px;top:170px;">2</div>
+<div class="ficha roja" style="left:250px;top:280px;">3</div>
+<div class="ficha roja" style="left:250px;top:390px;">4</div>
+<div class="ficha roja" style="left:250px;top:500px;">5</div>
 
-<script>
+<div class="ficha roja" style="left:450px;top:120px;">6</div>
+<div class="ficha roja" style="left:450px;top:250px;">7</div>
+<div class="ficha roja" style="left:450px;top:380px;">8</div>
 
-const canvas=document.getElementById("campo");
-const ctx=canvas.getContext("2d");
+<div class="ficha roja" style="left:700px;top:220px;">9</div>
+<div class="ficha roja" style="left:700px;top:420px;">10</div>
 
-// Césped
-ctx.fillStyle="#43a047";
-ctx.fillRect(0,0,900,500);
+<div class="ficha roja" style="left:900px;top:320px;">11</div>
 
-// Líneas
-ctx.strokeStyle="white";
-ctx.lineWidth=4;
+<div class="ficha azul" style="left:950px;top:100px;">1</div>
+<div class="ficha azul" style="left:850px;top:170px;">2</div>
+<div class="ficha azul" style="left:850px;top:280px;">3</div>
+<div class="ficha azul" style="left:850px;top:390px;">4</div>
+<div class="ficha azul" style="left:850px;top:500px;">5</div>
 
-ctx.strokeRect(20,20,860,460);
+<div class="ficha azul" style="left:650px;top:120px;">6</div>
+<div class="ficha azul" style="left:650px;top:250px;">7</div>
+<div class="ficha azul" style="left:650px;top:380px;">8</div>
 
-ctx.beginPath();
-ctx.moveTo(450,20);
-ctx.lineTo(450,480);
-ctx.stroke();
+<div class="ficha azul" style="left:400px;top:220px;">9</div>
+<div class="ficha azul" style="left:400px;top:420px;">10</div>
 
-ctx.beginPath();
-ctx.arc(450,250,60,0,Math.PI*2);
-ctx.stroke();
+<div class="ficha azul" style="left:180px;top:320px;">11</div>
 
-</script>
+<div class="ficha balon" style="left:530px;top:330px;">⚽</div>
 
-</body>
-</html>
+</div>
