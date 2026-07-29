@@ -2,73 +2,83 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Pixel Games - Juegos</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Juegos</title>
 
 <style>
+
 body{
-    background:#ff8c00;
-    font-family:Arial,sans-serif;
     margin:0;
-    color:white;
+    font-family:Arial, sans-serif;
+    background:linear-gradient(#4facfe,#00c6fb);
     text-align:center;
 }
 
 h1{
-    padding:30px;
-    font-size:50px;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(3,220px);
-    gap:30px;
-    justify-content:center;
+    color:white;
     margin-top:30px;
+    font-size:42px;
 }
 
-.juego{
-    width:220px;
-    height:220px;
-    background:#ffffff;
-    border-radius:20px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-decoration:none;
-    color:#007bff;
+.menu{
+    width:320px;
+    margin:auto;
+    margin-top:40px;
+}
+
+button{
+    width:100%;
+    padding:20px;
+    margin:12px 0;
     font-size:24px;
-    font-weight:bold;
-    transition:0.3s;
+    border:none;
+    border-radius:18px;
+    cursor:pointer;
+    background:white;
+    transition:0.25s;
 }
 
-.juego:hover{
-    background:#d9ecff;
+button:hover{
     transform:scale(1.05);
+    background:#ffe680;
 }
+
+.volver{
+    background:#ff5555;
+    color:white;
+}
+
 </style>
 
 </head>
 
 <body>
 
-<h1>🎮 Pixel Games</h1>
+<h1>🎮 Juegos</h1>
 
-<div class="grid">
+<div class="menu">
 
-<a href="juego1.html" class="juego">🍓 Juego 1</a>
+<a href="juego1.html">
+<button>🪙 Juego 1</button>
+</a>
 
-<a href="juego2.html" class="juego">🪙 Juego 2</a>
-    
-<a href="#" class="juego">Juego 3</a>
+<a href="juego2.html">
+<button>🧺 Juego 2</button>
+</a>
 
-<a href="#" class="juego">Juego 4</a>
+<a href="juego3.html">
+<button>⚽ Juego 3 - Fútbol</button>
+</a>
 
-<a href="#" class="juego">Juego 5</a>
+<a href="juego4.html">
+<button>🏎️ Juego 4 - Carreras</button>
+</a>
 
-<a href="#" class="juego">Juego 6</a>
-    
-<a href="futbol.html" class="juego">⚽ Practicar fútbol</a>
-    
+<a href="index.html">
+<button class="volver">⬅ Volver al inicio</button>
+</a>
+
 </div>
 
 </body>
