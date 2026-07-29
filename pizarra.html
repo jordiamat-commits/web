@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Pizarra Magnética</title>
+
+<style>
+
+body{
+    margin:0;
+    background:#1b5e20;
+    color:white;
+    text-align:center;
+    font-family:Arial;
+}
+
+canvas{
+    background:#43a047;
+    border:5px solid white;
+}
+
+button{
+    font-size:22px;
+    padding:15px 30px;
+    margin:15px;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>🧲 Pizarra Magnética</h1>
+
+<p>Próximamente podrás mover jugadores, balón, conos y árbitro.</p>
+
+<canvas id="campo" width="900" height="500"></canvas>
+
+<br>
+
+<button onclick="location.href='futbol.html'">
+⬅ Volver
+</button>
+
+<script>
+
+const canvas=document.getElementById("campo");
+const ctx=canvas.getContext("2d");
+
+// Césped
+ctx.fillStyle="#43a047";
+ctx.fillRect(0,0,900,500);
+
+// Líneas
+ctx.strokeStyle="white";
+ctx.lineWidth=4;
+
+ctx.strokeRect(20,20,860,460);
+
+ctx.beginPath();
+ctx.moveTo(450,20);
+ctx.lineTo(450,480);
+ctx.stroke();
+
+ctx.beginPath();
+ctx.arc(450,250,60,0,Math.PI*2);
+ctx.stroke();
+
+</script>
+
+</body>
+</html>
