@@ -125,3 +125,18 @@ setInterval(crearMoneda,1200);
 
 </body>
 </html>
+if (my > 550) {
+
+    clearInterval(caer);
+
+    document.body.innerHTML = `
+        <div style="text-align:center;margin-top:120px;font-family:Arial;">
+            <h1 style="font-size:80px;color:red;">GAME OVER</h1>
+
+            <button onclick="window.location.href='juegos.html'"
+            style="font-size:30px;padding:15px 40px;cursor:pointer;">
+                ⬅ Volver
+            </button>
+        </div>
+    `;
+}
