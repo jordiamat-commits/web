@@ -2,46 +2,73 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Entrenar Fútbol</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Juego 3 - Fútbol</title>
 
 <style>
+
 body{
     margin:0;
-    background:#2e7d32;
-    color:white;
-    text-align:center;
     font-family:Arial;
+    background:linear-gradient(#4CAF50,#2E7D32);
+    text-align:center;
+}
+
+h1{
+    color:white;
+    margin-top:40px;
+    font-size:42px;
+}
+
+.menu{
+    width:320px;
+    margin:auto;
+    margin-top:40px;
 }
 
 button{
-    font-size:22px;
-    padding:15px 30px;
-    margin:15px;
+    width:100%;
+    padding:20px;
+    margin:15px 0;
+    font-size:24px;
     border:none;
-    border-radius:12px;
+    border-radius:20px;
     cursor:pointer;
+    background:white;
 }
 
-canvas{
-    background:#43a047;
-    border:5px solid white;
+button:hover{
+    background:#ffe082;
 }
+
+.volver{
+    background:#ff5252;
+    color:white;
+}
+
 </style>
 
 </head>
+
 <body>
 
-<h1>⚽ Entrenamiento de fútbol</h1>
+<h1>⚽ Juego 3 - Fútbol</h1>
 
-<p>Aquí aparecerán los ejercicios.</p>
+<div class="menu">
 
-<canvas width="900" height="500"></canvas>
+<a href="entrenar.html">
+<button>⚽ Practicar fútbol</button>
+</a>
 
-<br>
+<a href="pizarra.html">
+<button>📋 Pizarra magnética</button>
+</a>
 
-<button onclick="location.href='futbol.html'">
-⬅ Volver
-</button>
+<a href="juegos.html">
+<button class="volver">⬅ Volver</button>
+</a>
+
+</div>
 
 </body>
 </html>
