@@ -1,141 +1,127 @@
-let cuentaAtras = 3;
-let jugando = false;
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Atrapa Monedas</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Juego de monedas</title>
 
 <style>
 body{
     margin:0;
-    background:skyblue;
+    font-family:Arial,sans-serif;
+    background:#87CEEB;
     text-align:center;
-    font-family:Arial;
 }
 
 h1{
+    margin:15px 0;
+    font-size:48px;
     color:white;
 }
 
-canvas{
-    background:#87CEEB;
-    border:4px solid white;
+#juego{
+    position:relative;
+    width:900px;
+    height:550px;
+    margin:auto;
+    background:#dff6ff;
+    border:5px solid #333;
+    overflow:hidden;
+}
+
+#cesta{
+    position:absolute;
+    bottom:15px;
+    left:400px;
+    font-size:70px;
+}
+
+.moneda{
+    position:absolute;
+    font-size:40px;
+}
+
+#puntos{
+    font-size:30px;
+    margin:15px;
+    font-weight:bold;
 }
 </style>
 </head>
 
 <body>
 
-<h1>🪙 Atrapa Monedas</h1>
+<h1>🪙 Juego de monedas</h1>
 
-<h2 id="puntos">Puntos: 0</h2>
+<div id="puntos">Puntos: 0</div>
 
-<canvas id="juego" width="600" height="500"></canvas>
+<div id="juego">
+    <div id="cesta">🧺</div>
+</div>
 
 <script>
 
-const canvas=document.getElementById("juego");
-const ctx=canvas.getContext("2d");
+const juego=document.getElementById("juego");
+const cesta=document.getElementById("cesta");
+const puntosTexto=document.getElementById("puntos");
 
 let puntos=0;
-let velocidad=3;
+let x=400;
 
-let cesta={
-    x:250,
-    y:450,
-    ancho:100,
-    alto:20
-};
+document.addEventListener("keydown",e=>{
+    if(e.key==="ArrowLeft") x-=30;
+    if(e.key==="ArrowRight") x+=30;
 
-let monedas=[
-    {x:100,y:-50},
-    {x:350,y:-250}
-];
+    if(x<0)x=0;
+    if(x>820)x=820;
 
-document.addEventListener("keydown",function(e){
-
-    if(e.key=="ArrowLeft"){
-        cesta.x-=30;
-    }
-
-    if(e.key=="ArrowRight"){
-        cesta.x+=30;
-    }
-
+    cesta.style.left=x+"px";
 });
 
-function dibujar(){
+function crearMoneda(){
 
-    ctx.clearRect(0,0,600,500);
+    const moneda=document.createElement("div");
+    moneda.className="moneda";
+    moneda.innerHTML="🪙";
 
-    ctx.fillStyle="brown";
-    ctx.fillRect(cesta.x,cesta.y,cesta.ancho,cesta.alto);
+    let mx=Math.random()*850;
+    let my=0;
 
-    for(let i=0;i<monedas.length;i++){
+    moneda.style.left=mx+"px";
+    moneda.style.top=my+"px";
 
-        monedas[i].y+=velocidad;
+    juego.appendChild(moneda);
 
-        ctx.beginPath();
-        ctx.arc(monedas[i].x,monedas[i].y,15,0,Math.PI*2);
-        ctx.fillStyle="gold";
-        ctx.fill();
+    const caer=setInterval(()=>{
 
-        // Atrapar moneda
-        if(
-            monedas[i].y>430 &&
-            monedas[i].x>cesta.x &&
-            monedas[i].x<cesta.x+cesta.ancho
-        ){
+        my+=2;   // ← velocidad lenta
+
+        moneda.style.top=my+"px";
+
+        if(my>470 &&
+           mx>x-20 &&
+           mx<x+70){
 
             puntos++;
-            document.getElementById("puntos").innerHTML="Puntos: "+puntos;
+            puntosTexto.innerHTML="Puntos: "+puntos;
 
-            monedas[i].x=Math.random()*560+20;
-            monedas[i].y=-Math.random()*300;
+            moneda.remove();
+            clearInterval(caer);
 
-            if(puntos==10){
-                monedas.push({
-                    x:Math.random()*560+20,
-                    y:-150
-                });
-            }
-
-            if(puntos==20){
-                velocidad=5;
-            }
         }
 
-        // Game Over
-        if(monedas[i].y>500){
-          ctx.fillStyle = "rgba(0,0,0,0.7)";
-ctx.fillRect(0,0,canvas.width,canvas.height);
-
-ctx.fillStyle = "red";
-ctx.font = "70px Arial";
-ctx.textAlign = "center";
-ctx.fillText("GAME OVER", canvas.width/2, canvas.height/2);
-
-ctx.fillStyle = "white";
-ctx.font = "30px Arial";
-ctx.fillText("Puntos: " + puntos, canvas.width/2, canvas.height/2 + 60);
-
-return;
+        if(my>550){
+            moneda.remove();
+            clearInterval(caer);
         }
 
-    }
-
-    requestAnimationFrame(dibujar);
+    },20);
 
 }
 
-dibujar();
+setInterval(crearMoneda,1200);
 
 </script>
-<button onclick="reiniciarJuego()">
-🔄 Volver a empezar
-</button>
-    function reiniciarJuego() {
-    location.reload();
-}
 
+</body>
+</html>
