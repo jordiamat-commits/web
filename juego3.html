@@ -1,50 +1,484 @@
-⚽ MENÚ PRINCIPAL
+<!DOCTYPE html>
+<html lang="es">
+<head>
 
-▶️ Jugar Partido
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-👕 Personalizar equipación
-   ├─ Camisetas
-   ├─ Pantalones
-   ├─ Botas
-   ├─ Escudos
-   └─ Colores
+<title>Football Legends</title>
 
-🏟️ Estadios
-   ├─ Clásico
-   ├─ Azul
-   ├─ Rosa
-   ├─ Lila
-   ├─ Violeta
-   ├─ Nieve
-   └─ Futurista
+<style>
 
-🛒 Tienda
-   ├─ Equipaciones especiales
-   ├─ Botas
-   ├─ Balones
-   └─ Celebraciones
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
 
-🏆 Logros
+body{
 
-📊 Estadísticas
-   ├─ Partidos jugados
-   ├─ Victorias
-   ├─ Empates
-   ├─ Derrotas
-   ├─ Goles marcados
-   ├─ Goles encajados
-   ├─ Asistencias
-   ├─ Posesión media
-   ├─ Precisión de pase
-   ├─ Tiros
-   ├─ Porterías a cero
-   ├─ Monedas ganadas
-   └─ Tiempo jugado
+background:linear-gradient(#ffe600,#ffcc00);
+height:100vh;
+overflow:hidden;
 
-💰 Modo Grind
+}
 
-🎁 Recompensas diarias
+#titulo{
 
-⚙️ Ajustes
+text-align:center;
+font-size:60px;
+font-weight:bold;
+color:white;
+text-shadow:4px 4px 8px black;
+margin-top:40px;
 
-🚪 Volver
+}
+
+#info{
+
+position:absolute;
+top:20px;
+right:20px;
+background:white;
+padding:15px;
+border-radius:15px;
+box-shadow:0 8px 20px rgba(0,0,0,.3);
+font-size:22px;
+
+}
+
+#menu{
+
+display:flex;
+flex-direction:column;
+align-items:center;
+margin-top:70px;
+gap:30px;
+
+}
+
+.boton{
+
+width:420px;
+padding:22px;
+
+background:linear-gradient(#ff5555,#cc0000);
+
+color:white;
+
+font-size:34px;
+
+font-weight:bold;
+
+border:none;
+
+border-radius:20px;
+
+cursor:pointer;
+
+box-shadow:0 12px #880000;
+
+transition:.15s;
+
+}
+
+.boton:hover{
+
+transform:scale(1.05);
+
+}
+
+.boton:active{
+
+transform:translateY(8px);
+
+box-shadow:0 4px #880000;
+
+}
+
+#version{
+
+position:absolute;
+
+bottom:15px;
+
+left:15px;
+
+font-size:20px;
+
+color:#333;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="titulo">
+
+⚽ FOOTBALL LEGENDS
+
+</div>
+
+<div id="info">
+
+💰 Monedas: <span id="monedas">1000</span><br><br>
+
+⭐ Nivel: <span id="nivel">1</span>
+
+</div>
+
+<div id="menu">
+
+<button class="boton" id="jugar">
+
+⚽ JUGAR PARTIDO
+
+</button>
+
+<button class="boton" id="equipacion">
+
+👕 CAMBIAR EQUIPACIÓN
+
+</button>
+
+<button class="boton" id="club">
+
+📊 MI CLUB
+
+</button>
+
+</div>
+
+<div id="version">
+
+Versión Alpha 0.1
+
+</div>
+
+<script// ----- TIENDA DE EQUIPACIONES -----
+
+const equipaciones = [
+  {nombre:"🔵 Equipación Azul", precio:500},
+  {nombre:"🔴 Equipación Roja", precio:750},
+  {nombre:"⚫ Equipación Negra", precio:1000},
+  {nombre:"🟢 Equipación Verde", precio:1500},
+  {nombre:"⭐ Equipación Legend", precio:3000}
+];
+
+document.getElementById("equipacion").onclick = function(){
+
+    let html = `
+    <div id="tienda" style="
+        position:absolute;
+        inset:0;
+        background:#ffe600;
+        padding:30px;
+        overflow:auto;
+    ">
+
+    <h1 style="
+        text-align:center;
+        color:#d00000;
+        font-size:50px;
+    ">👕 TIENDA</h1>
+
+    <h2 style="text-align:center">
+        💰 Monedas: <span id="dinero">${monedas}</span>
+    </h2>
+    `;
+
+    equipaciones.forEach((e,i)=>{
+
+        html += `
+        <div style="
+            background:white;
+            margin:20px auto;
+            width:450px;
+            border-radius:20px;
+            padding:20px;
+            box-shadow:0 8px 15px rgba(0,0,0,.25);
+            text-align:center;
+        ">
+
+        <h2>${e.nombre}</h2>
+
+        <p style="font-size:24px">
+            Precio: 💰 ${e.precio}
+        </p>
+
+        <button
+            onclick="comprar(${i})"
+            style="
+                background:#d40000;
+                color:white;
+                border:none;
+                padding:15px 40px;
+                border-radius:15px;
+                font-size:22px;
+                cursor:pointer;
+            ">
+            COMPRAR
+        </button>
+
+        </div>
+        `;
+
+    });
+
+    html += `
+        <div style="text-align:center;margin-top:30px;">
+            <button onclick="location.reload()"
+            style="
+                background:#444;
+                color:white;
+                padding:15px 35px;
+                border:none;
+                border-radius:15px;
+                font-size:22px;
+            ">
+                ⬅️ Volver
+            </button>
+        </div>
+
+    </div>`;
+
+    document.body.innerHTML = html;
+
+};
+
+// Comprar
+
+function comprar(i){
+
+    if(monedas>=equipaciones[i].precio){
+
+        monedas-=equipaciones[i].precio;
+
+        alert("¡Has comprado " + equipaciones[i].nombre + "!");
+
+        location.reload();
+
+    }else{
+
+        alert("No tienes suficientes monedas.");
+
+    }
+
+}>
+
+document.getElementById("jugar").onclick=function(){
+
+alert("Próximamente comenzará el partido.");
+
+};
+
+document.getElementById("equipacion").onclick=function(){
+
+alert("Próximamente se abrirá la tienda de equipaciones.");
+
+};
+
+document.getElementById("club").onclick=function(){
+
+alert("Próximamente aparecerán tus estadísticas.");
+
+};
+
+</script// ---------- PARTIDO ----------
+
+document.getElementById("jugar").onclick = iniciarPartido;
+
+function iniciarPartido(){
+
+document.body.innerHTML=`
+
+<div id="pantallaCarga"
+style="
+width:100vw;
+height:100vh;
+background:#157a24;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+color:white;
+">
+
+<h1 style="font-size:70px;">⚽ FOOTBALL LEGENDS</h1>
+
+<h2>Rival: FC Random</h2>
+
+<h2>Dificultad: ⭐⭐</h2>
+
+<div id="cuenta"
+style="
+font-size:140px;
+margin-top:40px;
+font-weight:bold;
+">
+3
+</div>
+
+</div>
+
+`;
+
+let numero=3;
+
+const tiempo=setInterval(()=>{
+
+numero--;
+
+if(numero>0){
+
+document.getElementById("cuenta").textContent=numero;
+
+}else if(numero==0){
+
+document.getElementById("cuenta").textContent="¡YA!";
+
+}else{
+
+clearInterval(tiempo);
+
+mostrarCampo();
+
+}
+
+},1000);
+
+}
+
+function mostrarCampo(){
+// =========================
+// PARTE 4 - EQUIPOS Y CAMPO
+// =========================
+
+function crearJugador(x,y,color){
+
+    const j=document.createElement("div");
+
+    j.style.position="absolute";
+    j.style.left=x+"px";
+    j.style.top=y+"px";
+
+    j.style.width="30px";
+    j.style.height="30px";
+
+    j.style.borderRadius="50%";
+
+    j.style.background=color;
+
+    j.style.border="2px solid white";
+
+    j.style.boxShadow="0 0 10px rgba(0,0,0,.5)";
+
+    document.body.appendChild(j);
+
+}
+
+const azul=[
+[120,100],[180,180],[180,280],[180,380],
+[300,120],[300,220],[300,340],
+[430,150],[430,250],[430,350],
+[520,250]
+];
+
+const rojo=[
+[1000,100],[940,180],[940,280],[940,380],
+[820,120],[820,220],[820,340],
+[700,150],[700,250],[700,350],
+[620,250]
+];
+
+azul.forEach(p=>{
+
+crearJugador(p[0],p[1],"dodgerblue");
+
+});
+
+rojo.forEach(p=>{
+
+crearJugador(p[0],p[1],"crimson");
+
+});
+
+// ---------- PORTERÍAS ----------
+
+const porteriaIzq=document.createElement("div");
+
+porteriaIzq.style.position="absolute";
+porteriaIzq.style.left="0px";
+porteriaIzq.style.top="220px";
+porteriaIzq.style.width="14px";
+porteriaIzq.style.height="180px";
+porteriaIzq.style.background="white";
+
+document.body.append
+document.body.innerHTML=`
+
+<div
+style="
+background:#1d8d36;
+width:100vw;
+height:100vh;
+position:relative;
+overflow:hidden;
+">
+
+<div id="marcador"
+style="
+position:absolute;
+top:10px;
+left:50%;
+transform:translateX(-50%);
+background:black;
+color:white;
+padding:12px 30px;
+border-radius:15px;
+font-size:28px;
+">
+🔵 0 - 0 🔴 &nbsp;&nbsp; ⏱ 00:00
+</div>
+</div>
+
+<div
+style="
+position:absolute;
+left:50%;
+top:0;
+bottom:0;
+width:4px;
+background:white;
+transform:translateX(-50%);
+"></div>
+
+<div
+style="
+position:absolute;
+left:50%;
+top:50%;
+width:180px;
+height:180px;
+border:4px solid white;
+border-radius:50%;
+transform:translate(-50%,-50%);
+"></div>
+
+<div id="jugador"
+style="
+position:absolute;
+left:250px;
+top:300px;
+width:34px;
+height:34px;
+background:deepskyblue;
+border-radius:50%;
+border:>
+
+</body>
+</html>
