@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Juego de monedas</title>
 
 <style>
@@ -14,9 +15,13 @@ body{
 }
 
 h1{
-    margin:15px 0;
-    font-size:48px;
-    color:white;
+    margin:15px;
+    font-size:45px;
+}
+
+#puntos{
+    font-size:28px;
+    margin-bottom:10px;
 }
 
 #juego{
@@ -24,7 +29,7 @@ h1{
     width:900px;
     height:550px;
     margin:auto;
-    background:#dff6ff;
+    background:white;
     border:5px solid #333;
     overflow:hidden;
 }
@@ -32,19 +37,38 @@ h1{
 #cesta{
     position:absolute;
     bottom:15px;
-    left:400px;
+    left:410px;
     font-size:70px;
 }
 
-.moneda{
+#moneda{
     position:absolute;
-    font-size:40px;
+    top:0;
+    left:300px;
+    font-size:45px;
 }
 
-#puntos{
-    font-size:30px;
-    margin:15px;
-    font-weight:bold;
+#gameover{
+    display:none;
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,0.8);
+    color:white;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+}
+
+#gameover h2{
+    font-size:70px;
+    margin:0;
+}
+
+button{
+    margin-top:30px;
+    font-size:28px;
+    padding:15px 35px;
+    cursor:pointer;
 }
 </style>
 </head>
@@ -53,90 +77,91 @@ h1{
 
 <h1>🪙 Juego de monedas</h1>
 
-<div id="puntos">Puntos: 0</div>
+<div id="puntos">⭐ Puntos: 0</div>
 
 <div id="juego">
-    <div id="cesta">🧺</div>
+
+<div id="moneda">🪙</div>
+
+<div id="cesta">🧺</div>
+
+<div id="gameover">
+<h2>GAME OVER</h2>
+
+<button onclick="window.location='juegos.html'">
+⬅ Volver
+</button>
+</div>
+
 </div>
 
 <script>
 
-const juego=document.getElementById("juego");
-const cesta=document.getElementById("cesta");
-const puntosTexto=document.getElementById("puntos");
+let cesta=document.getElementById("cesta");
+let moneda=document.getElementById("moneda");
+let gameover=document.getElementById("gameover");
+let puntosTexto=document.getElementById("puntos");
+
+let cestaX=410;
+
+let monedaX=Math.random()*820;
+let monedaY=0;
 
 let puntos=0;
-let x=400;
 
-document.addEventListener("keydown",e=>{
-    if(e.key==="ArrowLeft") x-=30;
-    if(e.key==="ArrowRight") x+=30;
+document.addEventListener("keydown",function(e){
 
-    if(x<0)x=0;
-    if(x>820)x=820;
+if(e.key=="ArrowLeft") cestaX-=35;
+if(e.key=="ArrowRight") cestaX+=35;
 
-    cesta.style.left=x+"px";
+if(cestaX<0)cestaX=0;
+if(cestaX>820)cestaX=820;
+
+cesta.style.left=cestaX+"px";
+
 });
 
-function crearMoneda(){
+function nuevaMoneda(){
 
-    const moneda=document.createElement("div");
-    moneda.className="moneda";
-    moneda.innerHTML="🪙";
+monedaX=Math.random()*820;
+monedaY=0;
 
-    let mx=Math.random()*850;
-    let my=0;
-
-    moneda.style.left=mx+"px";
-    moneda.style.top=my+"px";
-
-    juego.appendChild(moneda);
-
-    const caer=setInterval(()=>{
-
-        my+=2;   // ← velocidad lenta
-
-        moneda.style.top=my+"px";
-
-        if(my>470 &&
-           mx>x-20 &&
-           mx<x+70){
-
-            puntos++;
-            puntosTexto.innerHTML="Puntos: "+puntos;
-
-            moneda.remove();
-            clearInterval(caer);
-
-        }
-
-        if(my>550){
-            moneda.remove();
-            clearInterval(caer);
-        }
-
-    },20);
+moneda.style.left=monedaX+"px";
+moneda.style.top="0px";
 
 }
 
-setInterval(crearMoneda,1200);
+let juego=setInterval(function(){
+
+monedaY+=2;   // velocidad lenta
+
+moneda.style.top=monedaY+"px";
+
+if(monedaY>470 &&
+monedaX>cestaX-20 &&
+monedaX<cestaX+70){
+
+puntos++;
+
+puntosTexto.innerHTML="⭐ Puntos: "+puntos;
+
+setTimeout(nuevaMoneda,400);
+
+}
+
+if(monedaY>520){
+
+clearInterval(juego);
+
+gameover.style.display="flex";
+
+}
+
+},20);
+
+nuevaMoneda();
 
 </script>
 
 </body>
 </html>
-if (my > 550) {
-
-    clearInterval(caer);
-
-    document.body.innerHTML = `
-        <div style="text-align:center;margin-top:120px;font-family:Arial;">
-            <h1 style="font-size:80px;color:red;">GAME OVER</h1>
-
-            <button onclick="window.location.href='juegos.html'"
-            style="font-size:30px;padding:15px 40px;cursor:pointer;">
-                ⬅ Volver
-            </button>
-        </div>
-    `;
-}
